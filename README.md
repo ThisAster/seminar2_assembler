@@ -1,8 +1,8 @@
-#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#+LANGUAGE: ru
-#+OPTIONS: ':t
-#+OPTIONS: toc:1
-#+OPTIONS: tasks:nil
+#ETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#ANGUAGE: ru
+#OPTIONS: ':t
+#OPTIONS: toc:1
+#OPTIONS: tasks:nil
 
 #+TITLE: Семинар 2: вызов фунцкий, использование стека, конечные автоматы
 
@@ -25,7 +25,7 @@
 
   Вспомним привычный уже код программы =Hello, world!=:
 
-#+BEGIN_SRC asm
+#BEGIN_SRC asm
 ; hello.asm 
 section .data
 message: db  'hello, world!', 10
@@ -43,7 +43,7 @@ _start:
     mov  rax, 60             ; 'exit' syscall number
     xor  rdi, rdi            ; error code
     syscall
-  #+END_SRC
+  #END_SRC
 
 Она завершается системным вызовом =exit=, который выходит из программы. 
 
@@ -57,7 +57,7 @@ _start:
 
 Кроме того, это полезно, мы выходим из программы более, чем в одном месте --- не нужно переписывать эти три инструкции.
 
-#+BEGIN_SRC asm
+#BEGIN_SRC asm
 ; hello.asm 
 section .data
 message: db  'hello, world!', 10
@@ -144,7 +144,7 @@ _start:
 
 Например, мы хотели бы вызвать функцию =sum=, которая на псевдокоде выглядит так:
 
-#+BEGIN_SRC c
+#BEGIN_SRC c
 // это псевдокод
 int sum(int a, int b) {
   return a + b;
@@ -156,7 +156,7 @@ rcx <- sum( 42, 44 )
 
 Вот реализация функции =sum= и её вызов:
 
-#+BEGIN_SRC asm
+#BEGIN_SRC asm
 ; rdi = a, rsi = b
 sum: 
       mov  rax, rdi
@@ -168,13 +168,13 @@ mov  rdi, 42
 mov  rsi, 44
 call sum
 mov  rcx, rax
-#+END_SRC
+#END_SRC
 
 Функция получает аргументы =a= и =b= через первые два регистра, используемые для передачи аргументов: =rdi= и =rsi=.
 При необходимости, следующие четыре аргумента перевались бы через регистры =rdx=, =rcx=, =r8= и =r9= (смотри секцию 2.4 книги "Low-level programming").
 При этом правильность вызова никак не контролируется. Рассмотрим следующий код:
 
-#+BEGIN_SRC asm
+#BEGIN_SRC asm
 ; rdi = a, rsi = b
 sum: 
       mov  rax, rdi
@@ -191,7 +191,7 @@ mov  rcx, rax     ; Скорее всего там "мусорное" значе
 
 *Вопрос*  Есть ли разница между этими двумя вызовами функции =f= с двумя аргументами?
 
-#+BEGIN_SRC asm
+#BEGIN_SRC asm
   mov  rdi,10
   mov  rsi, 30
   call f
@@ -199,13 +199,13 @@ mov  rcx, rax     ; Скорее всего там "мусорное" значе
   mov  rsi, 30
   mov  rdi,10
   call f
-#+END_SRC
+#END_SRC
 
 *Вопрос* Сколько аргументов нужно передать рассмотренной ранее функции =print_string=, чтобы она могла вывести любую строку с помощью системного вызова =write=? Хватит ли одного? 
 
 *Задание 1* Выделите из следующего кода (взято со стр. 22 книги "Low-level programming") функцию =print_hex=, которая примет аргумент в правильном регистре (не =rax=) и выведет его на экран. Выведите с её помощью любые три числа.
 
-#+BEGIN_SRC asm
+#BEGIN_SRC asm
 ; print_hex.asm
 section .data
 codes:
@@ -250,7 +250,7 @@ _start:
     xor  rdi, rdi
     syscall
 
-#+END_SRC
+#END_SRC
 
 * Возврат значений из функций
 
@@ -259,7 +259,7 @@ _start:
 
 *Задание 2* Прочитате секцию 2.5.2 из книги "Low-level programming". Перепишите следующую программу так, чтобы функция =print_string= принимала нуль-терминированную строку в единственном аргументе строки. С помощью [[./test_string.py][тестировщика]] протестируйте работу функций =string_length= и =print_string=.
 
-#+BEGIN_SRC asm
+#BEGIN_SRC asm
 ; print_string.asm 
 section .data
 message: db  'hello, world!', 10
@@ -318,7 +318,7 @@ _start:
 
 *Вопрос* Будет ли работать этот код на ассемблере? Корректен ли он с точки зрения соглашений?
 
-#+BEGIN_SRC asm
+#BEGIN_SRC asm
 ; rdi = адрес строки
 string_length:
     xor  rax, rax
@@ -339,7 +339,7 @@ print_string:
     mov  rdi, 1
     syscall           ; вызов write
     ret
-#+END_SRC
+#END_SRC
 
 *Вопрос* Будет ли работать этот код на ассемблере? Корректен ли он с точки зрения соглашений?
 
@@ -365,7 +365,7 @@ print_string:
     mov  rdi, 1
     syscall           ; вызов write
     ret
-#+END_SRC
+#END_SRC
 
 
 
@@ -378,7 +378,7 @@ print_string:
 
 *Вопрос* Есть ли разница между следующими способами выделения памяти?
 
-#+BEGIN_SRC asm
+#BEGIN_SRC asm
 ; Первый способ
 sub  rsp, 24
 
@@ -488,13 +488,13 @@ push 0
 
 ** Недетерминизм в C
 
-   #+BEGIN_SRC c
+   #BEGIN_SRC c
      int f() { print("f"); return 1; }
      int g() { print("g"); return 1; }
 
      ...
      f() + g();
-   #+END_SRC
+   #END_SRC
 
    [[./img/fsm-nondeterm-c.svg]]
 
