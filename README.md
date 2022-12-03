@@ -1,10 +1,4 @@
-#ETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
-#ANGUAGE: ru
-#OPTIONS: ':t
-#OPTIONS: toc:1
-#OPTIONS: tasks:nil
-
-#+TITLE: Семинар 2: вызов фунцкий, использование стека, конечные автоматы
+*TITLE: Семинар 2: вызов фунцкий, использование стека, конечные автоматы
 
 
 * Tема занятия
