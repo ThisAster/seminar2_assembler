@@ -10,6 +10,7 @@ section .text
 %define STDOUT 1
 %define SYS_CALL 1
 %define TETRAD 4
+
 global _start
 exit:
     mov  rax, EXIT            ; invoke 'exit' system call
