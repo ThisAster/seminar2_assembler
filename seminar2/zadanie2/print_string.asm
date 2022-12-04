@@ -7,6 +7,7 @@ section .text
 global _start
 
 %define STDOUT 1
+%define SYS_CALL 1
 
 string_length:
     xor rax, rax
@@ -29,7 +30,7 @@ print_string:
     call string_length
     pop rdi
     mov rsi, rdi
-    mov rax, 1
+    mov rax, SYS_CALL
     mov rdx, rax
     mov rdi, STDOUT
     syscall
