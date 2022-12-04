@@ -6,7 +6,7 @@ codes:
 section .text
 
 %define EXIT 60
-%define STDIN 1
+%define STDOUT 1
 global _start
 exit:
     mov  rax, EXIT            ; invoke 'exit' system call
