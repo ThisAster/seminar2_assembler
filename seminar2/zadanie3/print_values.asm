@@ -19,7 +19,7 @@ exit:
 ; Принимает код символа и выводит его в stdout
 print_char:
     push rdi
-    mov rax, 1
+    mov rax, SYS_CALL
     mov rdi, STDOUT
     mov rsi, rsp
     mov rdx, 1
