@@ -7,6 +7,8 @@ section .text
 
 %define EXIT 60
 %define STDOUT 1
+%define SYS_CALL 1
+%define TETRAD 4
 global _start
 exit:
     mov  rax, EXIT            ; invoke 'exit' system call
@@ -22,7 +24,7 @@ print_hex:
 	; the result is the offset in 'codes' array
     .loop:
         push rax
-        sub  rcx, 4
+        sub  rcx, TETRAD
         ; cl is a register, smallest part of rcx
         ; rax -- eax -- ax -- ah + al
         ; rcx -- ecx -- cx -- ch + cl
@@ -30,7 +32,7 @@ print_hex:
         and  rax, 0xf
 
         lea  rsi, [codes + rax]
-        mov  rax, 1
+        mov  rax, SYS_CALL
 
         ; syscall leaves rcx and r11 changed
         push rcx
