@@ -2,24 +2,27 @@ section .data
 message: db  'true', 10
 message2: db  'false', 10
 
+%define EXIT 60
+%define STDOUT 1
+
 section .text
 global _start
 print_string:
     mov  rdx, rsi
     mov  rsi, rdi
     mov  rax, 1
-    mov  rdi, 1
+    mov  rdi, STDOUT
     syscall
-    mov rax, 60
-    mov rdi, 0
+    mov rax, EXIT
+    xor rdi, rdi
     syscall
 
 getsymbol:    
-    xor rax, rax ;0 - read syscall number
-    xor rdi, rdi ;0 - stdin
-    push 0 ;space for char
+    xor rax, rax ; 0 - read syscall number
+    xor rdi, rdi ; 0 - stdin
+    push 0 ; space for char
     mov rsi, rsp 
-    mov rdx, 1 ;read 1 byte
+    mov rdx, 1 ; read 1 byte
     syscall
     pop rax
     ret
