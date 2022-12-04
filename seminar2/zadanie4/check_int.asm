@@ -5,6 +5,10 @@ section .data
 
 section .text
 
+%define EXIT 60
+%define STDOUT 1
+%define SYS_CALL 1
+
 ; getsymbol is a routine to
 ; read a symbol (e.g. from stdin)
 ; into al
@@ -30,14 +34,14 @@ getsymbol:
 print_string:
     mov  rdx, rsi
     mov  rsi, rdi
-    mov  rax, 1
-    mov  rdi, 1
+    mov  rax, SYS_CALL
+    mov  rdi, STDOUT
     syscall
     ret
 
 ; exit with 0 code
 exit:
-    mov  rax, 60
+    mov  rax, EXIT
     xor  rdi, rdi
     syscall
 
